@@ -11,20 +11,38 @@ float vx, vy;
 float x_t, t, y;
 float g = 9.81;
 
-float forward(vector<float> x, int i, float y_0){
-
-    t = (x.at(i) - x_t) / vx;
-    y = y_0 + vy * t - g * t * t / 2;
-
+float step(float x_c, float h_c, float vx_, float vy_, float x_n) {
+    t = (x_n - x_c) / vx_;
+    y = h_c + vy_ * t - g * t * t / 2;
     return y;
 }
 
-float back(vector<float> x, int i, float y_0){
 
-    t = (x.at(i) - x[i]) / vx;
-    y = y_0 + vy * t - g * t * t / 2;
+pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<float> h) {
+    int i_next = i + 1;
+    y = step(x[i], h[i], vx_, vy_, x[i_next]);
+//    cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
 
-    return y;
+    while (y > 0 && (i_next != (x.size())) && (y > h[i_next])) {
+        i_next++;
+        y = step(x[i], h[i], vx_, vy_, x[i_next]);
+//        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+    }
+    return pair<int, float>(i_next, y);
+}
+
+pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float> h) {
+    int i_next = i - 1;
+    y = step(x[i], h[i], vx_, vy_, x[i_next]);
+//    cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+
+    while (y > 0 && (i_next != (x.size())) && (y > h[i_next])) {
+        i_next--;
+        y = step(x[i], h[i], vx_, vy_, x[i_next]);
+//        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+    }
+    return pair<int, float>(i_next, y);
+
 }
 
 int main() {
@@ -38,10 +56,10 @@ int main() {
 
     vector<float> x;
     x.push_back(0);
-    vector<float> h(1);
+    vector<float> h;
     h.push_back(h0);
 
-    while (!file.eof()){
+    while (!file.eof()) {
         float x_n, h_n;
         file >> x_n >> h_n;
         x.push_back(x_n);
@@ -50,32 +68,25 @@ int main() {
     file.close();
 
     string direction = "right";
-    int i = 1;
+    int i = 0;
+    int i_n = 0;
     float y_0 = h0;
     x_t = 0;
-    forward(x, i, y_0);
-    i++;
-    while (y > 0 && (i != (x.size())) && (i !=0) ) {
+    auto p = forward(i, vx, vy, x, h);
+    i = p.first;
+    y = p.second;
 
-        if (y <= h[i] && direction == "right") {
+    while (y > 0 && (i != (x.size())) && (i != 0)) {
+        vx = -vx;
+        if (direction == "right"){
             direction = "left";
-            vx = -vx;
-            y_0 = y;
-            x_t = x.at(i);
-        } else if (y <= h[i] && direction == "left") {
+            p = back(i, vx, vy, x, h);}
+        else {
             direction = "right";
-            x_t = x.at(i);
-            vx = -vx;
-            y_0 = y;
+            p = forward(i, vx, vy, x, h);
         }
-
-        if (direction == "right") {
-            i++;
-            forward(x, i, y_0);
-        } else {
-            i--;
-            back(x, i, y_0);
-        }
+        i = p.first;
+        y = p.second;
     }
 
     cout << i << endl;
