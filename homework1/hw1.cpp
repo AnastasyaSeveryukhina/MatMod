@@ -36,7 +36,10 @@ int main() {
         float d = val_d();
 
         if (k_p == 0) {
-            d = 0;
+            max_l[0] = x_0;
+            max_l[1] = y_0;
+            max_r[0] = x_0;
+            max_r[1] = y_0;
         } else if (k_p > 0) {
 
             if (d >= max_dl) {
