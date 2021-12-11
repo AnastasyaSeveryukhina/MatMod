@@ -54,8 +54,8 @@ int main() {
     }
     file.close();
     
-    std::cout << "Leftmost" << max_l[0] << " " << max_l[1] << std::endl;
-    std::cout << "Rightmost" << max_r[0] << " " << max_r[1] << std::endl;
+    std::cout << "Leftmost: " << max_l[0] << " " << max_l[1] << std::endl;
+    std::cout << "Rightmost: " << max_r[0] << " " << max_r[1] << std::endl;
     
     return 0;
 }
