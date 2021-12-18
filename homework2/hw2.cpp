@@ -48,7 +48,7 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
 int main() {
 
     ifstream file;
-    file.open("in.txt");
+    file.open("test4.txt");
 
     file >> h0;
     file >> vx >> vy;
@@ -67,28 +67,34 @@ int main() {
     }
     file.close();
 
-    string direction = "right";
-    int i = 0;
-    int i_n = 0;
-    float y_0 = h0;
-    x_t = 0;
-    auto p = forward(i, vx, vy, x, h);
-    i = p.first;
-    y = p.second;
+    if (x[1] == 0){
+        cout << 0 << endl;
+    }
+    else {
 
-    while (y > 0 && (i != (x.size())) && (i != 0)) {
-        vx = -vx;
-        if (direction == "right"){
-            direction = "left";
-            p = back(i, vx, vy, x, h);}
-        else {
-            direction = "right";
-            p = forward(i, vx, vy, x, h);
-        }
+        string direction = "right";
+        int i = 0;
+        int i_n = 0;
+        float y_0 = h0;
+        x_t = 0;
+        auto p = forward(i, vx, vy, x, h);
         i = p.first;
         y = p.second;
-    }
 
-    cout << i << endl;
-    return 0;
+        while (y > 0 && (i != (x.size())) && (i != 0)) {
+            vx = -vx;
+            if (direction == "right") {
+                direction = "left";
+                p = back(i, vx, vy, x, h);
+            } else {
+                direction = "right";
+                p = forward(i, vx, vy, x, h);
+            }
+            i = p.first;
+            y = p.second;
+        }
+
+        cout << i << endl;
+        return 0;
+    }
 }
