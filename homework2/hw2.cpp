@@ -48,7 +48,7 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
 int main() {
 
     ifstream file;
-    file.open("test4.txt");
+    file.open("in.txt");
 
     file >> h0;
     file >> vx >> vy;
