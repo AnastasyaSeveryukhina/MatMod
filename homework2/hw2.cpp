@@ -48,7 +48,7 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
 int main() {
 
     ifstream file;
-    file.open("in.txt");
+    file.open("test5.txt");
 
     file >> h0;
     file >> vx >> vy;
@@ -93,7 +93,7 @@ int main() {
             i = p.first;
             y = p.second;
         }
-        
+
         if (i < 0) {
             cout << 0 << endl;
         }
