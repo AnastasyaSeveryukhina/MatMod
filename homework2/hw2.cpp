@@ -59,24 +59,23 @@ int main() {
     vector<float> h;
     h.push_back(h0);
 
-    while (!file.eof()) {
-        float x_n, h_n;
-        file >> x_n >> h_n;
-        x.push_back(x_n);
-        h.push_back(h_n);
-    }
-    file.close();
-
-    if (x[1] == 0){
+    float x_n, h_n;
+    file >> x_n >> h_n;
+    if (x_n==0){
         cout << 0 << endl;
     }
     else {
+        x.push_back(x_n);
+        h.push_back(h_n);
+        while (!file.eof()) {
+            file >> x_n >> h_n;
+            x.push_back(x_n);
+            h.push_back(h_n);
+        }
+        file.close();
 
         string direction = "right";
         int i = 0;
-        int i_n = 0;
-        float y_0 = h0;
-        x_t = 0;
         auto p = forward(i, vx, vy, x, h);
         i = p.first;
         y = p.second;
@@ -96,10 +95,9 @@ int main() {
 
         if (i < 0) {
             cout << 0 << endl;
-        }
-        else {
+        } else {
             cout << i << endl;
         }
-        return 0;
     }
+    return 0;
 }
