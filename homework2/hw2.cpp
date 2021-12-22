@@ -94,7 +94,12 @@ int main() {
             y = p.second;
         }
 
-        cout << i << endl;
+        if (i < 0) {
+            cout << 0 << endl;
+        }
+        else {
+            cout << i << endl;
+        }
         return 0;
     }
 }
