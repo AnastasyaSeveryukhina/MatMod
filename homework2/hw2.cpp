@@ -82,7 +82,7 @@ int main() {
         i = p.first;
         y = p.second;
 
-        while (y > 0 && (i != (x.size())) && (i >= 0)) {
+        while (y > 0 && (i != (x.size())) && (i > 0)) {
             vx = -vx;
             if (direction == "right") {
                 direction = "left";
