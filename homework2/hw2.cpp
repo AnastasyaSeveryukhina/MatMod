@@ -48,58 +48,59 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
     return pair<int, float>(i_next, y);
 }
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc == 2) {
+        ifstream file;
+        file.open(argv[1]);
 
-    ifstream file;
-    file.open("in.txt");
-
-    file >> h0;
-    file >> vx >> vy;
-
-
-    vector<float> x;
-    x.push_back(0);
-    vector<float> h;
-    h.push_back(h0);
-
-    float x_n, h_n;
-    file >> x_n >> h_n;
-    if (x_n == 0) {
-        cout << 0 << endl;
-    } else {
-        x.push_back(x_n);
-        h.push_back(h_n);
-        while (!file.eof()) {
-            file >> x_n >> h_n;
-            x.push_back(x_n);
-            h.push_back(h_n);
-        }
-        file.close();
+        file >> h0;
+        file >> vx >> vy;
 
 
-        string direction = "right";
-        int i = 0;
-        auto p = forward(i, vx, vy, x, h, h0);
-        i = p.first;
-        y = p.second;
+        vector<float> x;
+        x.push_back(0);
+        vector<float> h;
+        h.push_back(h0);
 
-        while (y > 0 && ((i+1) != (x.size())) && (i > 0)) {
-            vx = -vx;
-            if (direction == "right") {
-                direction = "left";
-                p = back(i, vx, vy, x, h, y);
-            } else {
-                direction = "right";
-                p = forward(i, vx, vy, x, h, y);
-            }
-            i = p.first;
-            y = p.second;
-        }
-
-        if (i <= 0) {
+        float x_n, h_n;
+        file >> x_n >> h_n;
+        if (x_n == 0) {
             cout << 0 << endl;
         } else {
-            cout << i << endl;
+            x.push_back(x_n);
+            h.push_back(h_n);
+            while (!file.eof()) {
+                file >> x_n >> h_n;
+                x.push_back(x_n);
+                h.push_back(h_n);
+            }
+            file.close();
+
+
+            string direction = "right";
+            int i = 0;
+            auto p = forward(i, vx, vy, x, h, h0);
+            i = p.first;
+            y = p.second;
+
+            while (y > 0 && ((i + 1) != (x.size())) && (i > 0)) {
+                vx = -vx;
+                if (direction == "right") {
+                    direction = "left";
+                    p = back(i, vx, vy, x, h, y);
+                } else {
+                    direction = "right";
+                    p = forward(i, vx, vy, x, h, y);
+                }
+                i = p.first;
+                y = p.second;
+            }
+
+            if (i <= 0) {
+                cout << 0 << endl;
+            } else {
+                cout << i << endl;
+            }
         }
     }
     return 0;
