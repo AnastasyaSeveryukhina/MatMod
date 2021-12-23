@@ -93,10 +93,10 @@ int main() {
             y = p.second;
         }
 
-        if (i < 0) {
+        if (i <= 0) {
             cout << 0 << endl;
         } else {
-            cout << i << endl;
+            cout << i-1 << endl;
         }
     }
     return 0;
