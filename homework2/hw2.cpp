@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 
         float x_n, h_n;
         file >> x_n >> h_n;
-        if (x_n.size() == 0) {
+        if (x_n == 0) {
             cout << 0 << endl;
         } else {
             x.push_back(x_n);
