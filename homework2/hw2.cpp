@@ -18,25 +18,25 @@ float step(float x_c, float h_c, float vx_, float vy_, float x_n) {
 }
 
 
-pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y0) {
+pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y_n) {
     int i_next = i + 1;
-    y = step(x[i], y0, vx_, vy_, x[i_next]);
+    y = step(x[i], y_n, vx_, vy_, x[i_next]);
 //     cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     while (y > 0 && (i_next != (x.size())) && (y > h[i_next])) {
         i_next++;
-        y = step(x[i], y0, vx_, vy_, x[i_next]);
+        y = step(x[i], y_n, vx_, vy_, x[i_next]);
 //         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
     return pair<int, float>(i_next, y);
 }
 
-pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y0) {
+pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y_n) {
     int i_next = i - 1;
-    y = step(x[i], y0, vx_, vy_, x[i_next]);
+    y = step(x[i], y_n, vx_, vy_, x[i_next]);
 //     cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     i_next--;
     while (y > 0 && (i_next >= 0) && (y > h[i_next])) {
-        y = step(x[i], y0, vx_, vy_, x[i_next]);
+        y = step(x[i], y_n, vx_, vy_, x[i_next]);
         i_next--;
 //         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
@@ -47,7 +47,7 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
 int main() {
 
     ifstream file;
-    file.open("test2.txt");
+    file.open("in.txt");
 
     file >> h0;
     file >> vx >> vy;
@@ -73,16 +73,15 @@ int main() {
         file.close();
 
         string direction = "right";
-        y0 = h[0];
         int i = 0;
-        auto p = forward(i, vx, vy, x, h, y0);
+        auto p = forward(i, vx, vy, x, h, h0);
         i = p.first;
         y = p.second;
 
         while (y > 0 && (i != (x.size())) && (i >= 0)) {
             cout << "bumm" << endl;
             vx = -vx;
-            y0=y;
+            y0 = y;
             if (direction == "right") {
                 direction = "left";
                 p = back(i, vx, vy, x, h, y0);
