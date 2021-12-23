@@ -83,7 +83,7 @@ int main() {
         i = p.first;
         y = p.second;
 
-        while (y > 0 && ((i+1) != (x.size())) && (i >= 0)) {
+        while (y > 0 && (i != (x.size())) && (i >= 0)) {
             cout << "bumm" << endl;
             vx = -vx;
             if (direction == "right") {
@@ -100,7 +100,7 @@ int main() {
         if (i <= 0) {
             cout << 0 << endl;
         } else {
-                cout << i<< endl;
+                cout << i << endl;
             }
     }
     return 0;
