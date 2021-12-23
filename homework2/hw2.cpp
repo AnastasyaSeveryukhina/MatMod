@@ -84,7 +84,6 @@ int main() {
         y = p.second;
 
         while (y > 0 && (i != (x.size())) && (i >= 0)) {
-            cout << "bumm" << endl;
             vx = -vx;
             if (direction == "right") {
                 direction = "left";
