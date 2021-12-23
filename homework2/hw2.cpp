@@ -17,14 +17,15 @@ float step(float x_c, float h_c, float vx_, float vy_, float x_n) {
     return y;
 }
 
+
 pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y_n) {
     int i_next = i + 1;
     y = step(x[i], y_n, vx_, vy_, x[i_next]);
-//     cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+    cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     while (y > 0 && ((i_next + 1) != (x.size())) && (y > h[i_next])) {
         i_next++;
         y = step(x[i], y_n, vx_, vy_, x[i_next]);
-//         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
     if (y<0){
         i_next--;
@@ -35,13 +36,13 @@ pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<flo
 pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y_n) {
     int i_next = i - 1;
     y = step(x[i], y_n, vx_, vy_, x[i_next]);
-//     cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+    cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     while (y > 0 && ((i_next - 1) >= 0) && (y > h[i_next])) {
-        y = step(x[i], y_n, vx_, vy_, x[i_next]);
         i_next--;
-//         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+        y = step(x[i], y_n, vx_, vy_, x[i_next]);
+        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
-    if (y<0){
+    if (y<0) {
         i_next++;
     }
     return pair<int, float>(i_next, y);
@@ -50,7 +51,7 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
 int main() {
 
     ifstream file;
-    file.open("in.txt");
+    file.open("test5.txt");
 
     file >> h0;
     file >> vx >> vy;
@@ -82,7 +83,7 @@ int main() {
         i = p.first;
         y = p.second;
 
-        while (y > 0 && (i != (x.size())) && (i > 0)) {
+        while (y > 0 && ((i+1) != (x.size())) && (i > 0)) {
             vx = -vx;
             if (direction == "right") {
                 direction = "left";
@@ -98,9 +99,8 @@ int main() {
         if (i <= 0) {
             cout << 0 << endl;
         } else {
-                cout << i << endl;
-            }
+            cout << i << endl;
+        }
     }
     return 0;
 }
-
