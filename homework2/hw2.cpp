@@ -46,9 +46,6 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
         i_next++;
     }
     return pair<int, float>(i_next, y);
-
-}
-
 }
 
 int main() {
