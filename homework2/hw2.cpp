@@ -96,7 +96,10 @@ int main() {
         if (i < 0) {
             cout << 0 << endl;
         } else {
-            cout << i-1 << endl;
+            if (i==1){
+                cout << i << endl;
+            } else {cout << i-1 << endl;
+}
         }
     }
     return 0;
