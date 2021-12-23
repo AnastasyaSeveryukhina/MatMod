@@ -81,13 +81,12 @@ int main() {
         while (y > 0 && (i != (x.size())) && (i >= 0)) {
             cout << "bumm" << endl;
             vx = -vx;
-            y0 = y;
             if (direction == "right") {
                 direction = "left";
-                p = back(i, vx, vy, x, h, y0);
+                p = back(i, vx, vy, x, h, y);
             } else {
                 direction = "right";
-                p = forward(i, vx, vy, x, h, y0);
+                p = forward(i, vx, vy, x, h, y);
             }
             i = p.first;
             y = p.second;
