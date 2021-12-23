@@ -18,28 +18,27 @@ float step(float x_c, float h_c, float vx_, float vy_, float x_n) {
 }
 
 
-pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<float> h) {
+pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y0) {
     int i_next = i + 1;
-    y = step(x[i], h[i], vx_, vy_, x[i_next]);
-//    cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
-
+    y = step(x[i], y0, vx_, vy_, x[i_next]);
+    cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     while (y > 0 && (i_next != (x.size())) && (y > h[i_next])) {
         i_next++;
-        y = step(x[i], h[i], vx_, vy_, x[i_next]);
-//        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+        y = step(x[i], y0, vx_, vy_, x[i_next]);
+        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
     return pair<int, float>(i_next, y);
 }
 
-pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float> h) {
+pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y0) {
     int i_next = i - 1;
-    y = step(x[i], h[i], vx_, vy_, x[i_next]);
-//    cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
-
-    while (y > 0 && (i_next != (x.size())) && (y > h[i_next])) {
+    y = step(x[i], y0, vx_, vy_, x[i_next]);
+    cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+    i_next--;
+    while (y > 0 && (i_next >= 0) && (y > h[i_next])) {
+        y = step(x[i], y0, vx_, vy_, x[i_next]);
         i_next--;
-        y = step(x[i], h[i], vx_, vy_, x[i_next]);
-//        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
     return pair<int, float>(i_next, y);
 
@@ -48,7 +47,7 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
 int main() {
 
     ifstream file;
-    file.open("in.txt");
+    file.open("test2.txt");
 
     file >> h0;
     file >> vx >> vy;
@@ -61,10 +60,9 @@ int main() {
 
     float x_n, h_n;
     file >> x_n >> h_n;
-    if (x_n==0){
+    if (x_n == 0) {
         cout << 0 << endl;
-    }
-    else {
+    } else {
         x.push_back(x_n);
         h.push_back(h_n);
         while (!file.eof()) {
@@ -75,19 +73,22 @@ int main() {
         file.close();
 
         string direction = "right";
+        y0 = h[0];
         int i = 0;
-        auto p = forward(i, vx, vy, x, h);
+        auto p = forward(i, vx, vy, x, h, y0);
         i = p.first;
         y = p.second;
 
-        while (y > 0 && (i != (x.size())) && (i != 0)) {
+        while (y > 0 && (i != (x.size())) && (i >= 0)) {
+            cout << "bumm" << endl;
             vx = -vx;
+            y0=y;
             if (direction == "right") {
                 direction = "left";
-                p = back(i, vx, vy, x, h);
+                p = back(i, vx, vy, x, h, y0);
             } else {
                 direction = "right";
-                p = forward(i, vx, vy, x, h);
+                p = forward(i, vx, vy, x, h, y0);
             }
             i = p.first;
             y = p.second;
@@ -96,8 +97,8 @@ int main() {
         if (i <= 0) {
             cout << 0 << endl;
         } else {
-                cout << i - 1 << endl;
-        }
+                cout << i-1 << endl;
+            }
     }
     return 0;
 }
