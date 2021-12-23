@@ -27,9 +27,6 @@ pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<flo
         y = step(x[i], y_n, vx_, vy_, x[i_next]);
 //         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
-    if (y<0) {
-        i_next--;
-    }
     return pair<int, float>(i_next, y);
 }
 
@@ -41,9 +38,6 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
         y = step(x[i], y_n, vx_, vy_, x[i_next]);
         i_next--;
 //         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
-    }
-    if (y<0) {
-        i_next++;
     }
     return pair<int, float>(i_next, y);
 }
