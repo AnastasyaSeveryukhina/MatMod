@@ -42,6 +42,9 @@ pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float
         y = step(x[i], y_n, vx_, vy_, x[i_next]);
 //         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
+    if (y<0){
+        i_next--;
+    }
     return pair<int, float>(i_next, y);
 }
 
@@ -61,7 +64,7 @@ int main(int argc, char** argv) {
 
         float x_n, h_n;
         file >> x_n >> h_n;
-        if (x_n == 0) {
+        if (x_n.size() == 0) {
             cout << 0 << endl;
         } else {
             x.push_back(x_n);
