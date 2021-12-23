@@ -21,11 +21,11 @@ float step(float x_c, float h_c, float vx_, float vy_, float x_n) {
 pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y_n) {
     int i_next = i + 1;
     y = step(x[i], y_n, vx_, vy_, x[i_next]);
-    cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+//     cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     while (y > 0 && ((i_next + 1) != (x.size())) && (y > h[i_next])) {
         i_next++;
         y = step(x[i], y_n, vx_, vy_, x[i_next]);
-        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+//         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
         if (y<0) {
             i_next--;
         }
@@ -36,11 +36,11 @@ pair<int,float> forward(int i, float vx_, float vy_, vector<float> x, vector<flo
 pair<int, float> back(int i, float vx_, float vy_, vector<float> x, vector<float> h, float y_n) {
     int i_next = i - 1;
     y = step(x[i], y_n, vx_, vy_, x[i_next]);
-    cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+//     cout << "back: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     while (y > 0 && ((i_next - 1) >= 0) && (y > h[i_next])) {
         y = step(x[i], y_n, vx_, vy_, x[i_next]);
         i_next--;
-        cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
+//         cout << "forward: "<< i_next << " "  << x[i_next] << " "<< y << " " << h[i_next] << endl;
     }
     return pair<int, float>(i_next, y);
 
